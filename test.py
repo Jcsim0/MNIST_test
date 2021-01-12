@@ -60,8 +60,8 @@ model.fit(train_x, train_y,
           validation_data=(test_x, test_y))
 
 # 评估模型
-pre = model.evaluate(test_x, test_y, batch_size=500, verbose=2)  # 评估模型
-print('test_loss:', pre[0], '- test_acc:', pre[1])
+score = model.evaluate(test_x, test_y, verbose=0)
+print('Test score:', score)
 
 predicted_classes = model.predict_classes(test_x)
 # Check which items we got right / wrong
