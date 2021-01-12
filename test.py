@@ -20,6 +20,13 @@ from keras.layers.core import Dense, Dropout, Activation
 nb_classes = 10
 (train_x, train_y), (test_x, test_y) = mnist.load_data()
 
+for i in range(20):
+    #  plt.subplot(行，列，索引)
+    plt.subplot(4, 5, i + 1)
+    plt.imshow(train_x[i], cmap='gray', interpolation='none')
+    plt.title("Class {}".format(train_y[i]))
+plt.show()
+
 #  格式化数据
 # 对于每一个训练样本我们的神经网络得到单个的数组，所以我们需要将28x28的图片变形成784的向量，我们还将输入从[0,255]缩到[0,1].
 train_x = train_x.reshape(60000, 784)
