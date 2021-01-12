@@ -2,6 +2,8 @@ import tensorflow as tf
 from keras.models import Sequential
 from keras.layers import Conv2D, MaxPooling2D, Flatten, Dense
 import input_data
+import numpy as np
+import matplotlib.pyplot as plt
 
 
 
@@ -38,6 +40,24 @@ def CNN_2D(train_x, train_y, valid_x, valid_y, test_x, test_y):
     pre = model.evaluate(test_x, test_y, batch_size=500, verbose=2)  # 评估模型
     print('test_loss:', pre[0], '- test_acc:', pre[1])
 
+    predicted_classes = model.predict_classes(test_x)
+    # Check which items we got right / wrong
+    correct_indices = np.nonzero(predicted_classes == test_y)[0]
+    incorrect_indices = np.nonzero(predicted_classes != test_y)[0]
+    plt.figure()
+    for i, correct in enumerate(correct_indices[:9]):
+        plt.subplot(3, 3, i + 1)
+        plt.imshow(test_x[correct].reshape(28, 28), cmap='gray', interpolation='none')
+        plt.title("Predicted {}, Class {}".format(predicted_classes[correct], test_y[correct]))
+    plt.show()
+    plt.figure()
+    for i, incorrect in enumerate(incorrect_indices[:9]):
+        plt.subplot(3, 3, i + 1)
+        plt.imshow(test_x[incorrect].reshape(28, 28), cmap='gray', interpolation='none')
+        plt.title("Predicted {}, Class {}".format(predicted_classes[incorrect], test_y[incorrect]))
+    plt.show()
 
-train_x, train_y, valid_x, valid_y, test_x, test_y = read_data('MNIST_data')
-CNN_2D(train_x, train_y, valid_x, valid_y, test_x, test_y)
+
+if __name__ == '__main__':
+    train_x, train_y, valid_x, valid_y, test_x, test_y = read_data('MNIST_data')
+    CNN_2D(train_x, train_y, valid_x, valid_y, test_x, test_y)
