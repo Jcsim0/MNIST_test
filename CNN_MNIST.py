@@ -1,14 +1,16 @@
-from tensorflow.examples.tutorials.mnist import input_data
+import tensorflow as tf
 from keras.models import Sequential
 from keras.layers import Conv2D, MaxPooling2D, Flatten, Dense
+import input_data
 
-# 载入数据
-mnist = input_data.read_data_sets(path, one_hot=True)
+
 
 
 def read_data(path):
+    # 载入数据
+    mnist = input_data.read_data_sets(path, one_hot=True)
     train_x = mnist.train.images.reshape(-1, 28, 28, 1)
-    train_y = mnist.trian.labels
+    train_y = mnist.train.labels
     valid_x = mnist.validation.images.reshape(-1, 28, 28, 1)
     valid_y = mnist.validation.labels
     test_x = mnist.test.images.reshape(-1, 28, 28, 1)
